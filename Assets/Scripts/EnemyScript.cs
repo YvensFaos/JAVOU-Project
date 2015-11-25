@@ -37,6 +37,11 @@ public class EnemyScript : MonoBehaviour {
             shootTimer = shootCooldown;
         }
 
+        if (hp <= 0) //Se morrer....morreu
+        {
+            Destroy(gameObject);
+        }
+
         transform.Translate(transform.up * speed, Space.World);
         EnemyBehaviour();
 
@@ -53,5 +58,14 @@ public class EnemyScript : MonoBehaviour {
 
         transform.position = newPosition;
         
+    }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "PlayerBullet")
+        {
+            hp -= 10.0f;
+            Destroy(other.gameObject);
+        }
     }
 }

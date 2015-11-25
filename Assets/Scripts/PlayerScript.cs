@@ -34,5 +34,19 @@ public class PlayerScript : MonoBehaviour {
         {
             Instantiate(playerBullet, shooterPosition.position, transform.rotation);
         }
+
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
 	}
+
+    public void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
+        {
+            hp -= 10.0f;
+            Destroy(other.gameObject);
+        }
+    }
 }
