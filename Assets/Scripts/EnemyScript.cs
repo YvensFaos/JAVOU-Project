@@ -12,6 +12,8 @@ public class EnemyScript : MonoBehaviour {
     public Transform shooterPosition;
 
     public Transform enemyBullet;
+    public GameObject enemyExplosion;
+    public GameObject hitFX;
 
     private GameObject playerReference;
     private Vector3 playerPosition;
@@ -33,12 +35,13 @@ public class EnemyScript : MonoBehaviour {
         if (shootTimer <= 0)
         {
             Instantiate(enemyBullet, shooterPosition.position, transform.rotation);
-
             shootTimer = shootCooldown;
         }
 
         if (hp <= 0) //Se morrer....morreu
         {
+            GameObject explosion = Instantiate(enemyExplosion);
+            explosion.transform.position = transform.position;
             Destroy(gameObject);
         }
 
@@ -64,7 +67,11 @@ public class EnemyScript : MonoBehaviour {
     {
         if (other.gameObject.tag == "PlayerBullet")
         {
+            ContactPoint contactPoint = other.contacts[0];
+
             hp -= 10.0f;
+            GameObject hit = Instantiate(hitFX);
+            hit.transform.position = contactPoint.point;
             Destroy(other.gameObject);
         }
     }

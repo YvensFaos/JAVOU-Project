@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour {
     public Transform shooterPosition;
 
     public Transform playerBullet;
+    public GameObject playerExplosion;
+    public GameObject hitFX;
 
     private Rigidbody rigidBd;
 	void Start () 
@@ -30,6 +32,11 @@ public class PlayerScript : MonoBehaviour {
         //rigidBd.AddForce(transform.right * horizontal * speed, ForceMode.VelocityChange);
         //rigidBd.AddForce(transform.up * vertical * speed, ForceMode.VelocityChange);
 
+        if (horizontal != 0 || vertical != 0)
+        {
+            rigidBd.velocity = Vector3.zero;  //Retirar a inercia causada pelos impactos das balas.
+        }
+
         if(Input.GetButtonDown("Fire1"))
         {
             Instantiate(playerBullet, shooterPosition.position, transform.rotation);
@@ -37,6 +44,8 @@ public class PlayerScript : MonoBehaviour {
 
         if (hp <= 0)
         {
+            GameObject explosion = Instantiate(playerExplosion);
+            explosion.transform.position = transform.position;
             Destroy(gameObject);
         }
 	}
@@ -45,7 +54,11 @@ public class PlayerScript : MonoBehaviour {
     {
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
         {
+            ContactPoint contactPoint = other.contacts[0];
+
             hp -= 10.0f;
+            GameObject hit = Instantiate(hitFX);
+            hit.transform.position = contactPoint.point;
             Destroy(other.gameObject);
         }
     }
