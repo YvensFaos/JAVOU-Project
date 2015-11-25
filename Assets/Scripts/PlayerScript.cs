@@ -24,11 +24,11 @@ public class PlayerScript : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        //transform.Translate(transform.right * horizontal * speed, Space.World);
-        //transform.Translate(transform.up * vertical * speed, Space.World);
+        transform.Translate(transform.right * horizontal * speed, Space.World);
+        transform.Translate(transform.up * vertical * speed, Space.World);
 
-        rigidBd.AddForce(transform.right * horizontal * speed, ForceMode.VelocityChange);
-        rigidBd.AddForce(transform.up * vertical * speed, ForceMode.VelocityChange);
+        //rigidBd.AddForce(transform.right * horizontal * speed, ForceMode.VelocityChange);
+        //rigidBd.AddForce(transform.up * vertical * speed, ForceMode.VelocityChange);
 
         if(Input.GetButtonDown("Fire1"))
         {
