@@ -42,6 +42,7 @@ public class EnemyScript : MonoBehaviour {
         {
             GameObject explosion = Instantiate(enemyExplosion);
             explosion.transform.position = transform.position;
+            GameMaster.GM.score += 20;
             Destroy(gameObject);
         }
 
